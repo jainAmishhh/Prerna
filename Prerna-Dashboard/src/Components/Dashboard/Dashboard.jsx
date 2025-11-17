@@ -121,7 +121,7 @@ export default function DashboardPage() {
                     <div className="absolute top-8 left-8 w-32 h-32 bg-linear-to-br from-yellow-400 to-pink-500 rounded-full opacity-90"></div>
 
                     <img
-                      src="https://images.unsplash.com/photo-1759398454483-856641e0e013?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?auto=format&fit=crop&w=700&q=80"
+                      src="https://plus.unsplash.com/premium_photo-1681483508948-74f8391ea3ef?q=80&w=1100&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                       alt="Happy woman"
                       className="relative z-10 w-full h-[500px] object-cover opacity-95"
                     />
