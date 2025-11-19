@@ -19,7 +19,7 @@ else:
 DB_NAME = "prerna"
 COLLECTION_NAME = "opportunities"
 
-CSV_FILE = "opportunities_1000.csv"     # your dataset file
+CSV_FILE = "opportunities.csv"     # your dataset file
 EMBEDDINGS_FILE = "embeddings.pkl"
 BATCH_SIZE = 200
 # -------------------------------

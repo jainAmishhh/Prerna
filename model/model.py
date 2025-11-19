@@ -28,42 +28,75 @@ bert_model = SentenceTransformer("all-MiniLM-L6-v2")
 # -------------------------------------------------------
 #  MAIN RECOMMEND FUNCTION  (USED BY YOUR FASTAPI)
 # -------------------------------------------------------
-def recommend(age: int, interests: list, region:str= "India", top_k: int = 5):
 
-    # 1️⃣ Create user embedding
+def recommend(age: int, interests: list, region: str, top_k: int = 5):
+
+    # ---------------------------
+    # 1️⃣ Handle empty region
+    # ---------------------------
+    if not region or region.strip() == "":
+        region = "India"
+
+    region = region.strip()
+
+    # ---------------------------
+    # 2️⃣ List of all Indian states (your DB uses these)
+    # ---------------------------
+    indian_states = [
+        "Rajasthan", "Delhi", "Karnataka", "Kerala", "Tamil Nadu",
+        "Maharashtra", "Uttar Pradesh", "Madhya Pradesh", "Gujarat",
+        "Telangana", "Bihar", "Punjab", "Haryana", "West Bengal",
+        "Assam", "Odisha", "Goa", "Jharkhand", "Chhattisgarh",
+        "Uttarakhand", "Himachal Pradesh", "Tripura", "Manipur",
+        "Meghalaya", "Nagaland", "Sikkim", "Arunachal Pradesh", 
+    ]
+
+    # ---------------------------
+    # 3️⃣ Create region filter
+    # ---------------------------
+
+    if region.lower() == "india":
+        # Case: user enters India → return all states + India
+        region_query = {"$in": indian_states + ["India"]}
+    else:
+        # Case: user enters a state → return state + India
+        region_query = {"$in": [region, "India"]}
+
+    # ---------------------------
+    # 4️⃣ Create user embedding
+    # ---------------------------
     user_text = " ".join(interests) + f" age {age} region {region}"
     user_embedding = bert_model.encode(user_text, convert_to_tensor=True)
 
-    # 2️⃣ Fetch matching opportunities from MongoDB
+    # ---------------------------
+    # 5️⃣ Fetch matching documents
+    # ---------------------------
     matching_docs = list(collection.find({
-    "age_min": {"$lte": age},
-    "age_max": {"$gte": age},
-    "embedding": {"$exists": True}
-}))
+        "age_min": {"$lte": age},
+        "age_max": {"$gte": age},
+        "region": region_query,
+        "embedding": {"$exists": True}
+    }))
 
     if not matching_docs:
         return []
 
-    # 3️⃣ Extract embeddings stored in MongoDB
+    # ---------------------------
+    # 6️⃣ Compute similarity
+    # ---------------------------
     embeddings = torch.tensor([doc["embedding"] for doc in matching_docs])
-
-    # 4️⃣ Compute cosine similarity
     scores = util.cos_sim(user_embedding, embeddings)[0].cpu().numpy()
 
-    # 5️⃣ Add score to documents
+    # Attach scores
     for idx, doc in enumerate(matching_docs):
         doc["score"] = float(scores[idx])
+        doc["_id"] = str(doc["_id"])
 
-    # 6️⃣ Sort by rank score (descending)
-    ranked = sorted(matching_docs, key=lambda x: x["score"], reverse=True)
-
-    # 7️⃣ Pick top_k items
-    top_items = ranked[:top_k]
-
-    # 8️⃣ Ensure JSON-serializable output
-    for item in top_items:
-        item["_id"] = str(item["_id"])  # Convert ObjectId → string
+    # ---------------------------
+    # 7️⃣ Sort by score + return top_k
+    # ---------------------------
+    sorted_docs = sorted(matching_docs, key=lambda x: x["score"], reverse=True)
+    return sorted_docs[:top_k]
 
 
-    return top_items
 print("Documents in opportunities:", collection.count_documents({}))
