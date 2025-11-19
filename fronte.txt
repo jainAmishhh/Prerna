@@ -1,0 +1,4 @@
+/schemes?age=20&region=Kerala
+/scholarships?age=17&region=India
+/sports?age=25&region=Delhi
+/motivation?age=16&region=Rajasthan
