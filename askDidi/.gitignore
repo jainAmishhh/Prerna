@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE-specific files
+.vscode/
+.idea/
+*.iml
+
+# Environment variables
+.env
+.env.*
+.flaskenv
+
+# Logs and temporary files
+*.log
+tmp/
+temp/
+
+# FastAPI-specific
+# Database files (if using SQLite or similar)
+*.db
+*.sqlite3
+
+# Test-related files
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Docker files (if applicable)
+.dockerignore

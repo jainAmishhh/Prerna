@@ -1,0 +1,21 @@
+.avatar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.avatar {
+    width: 250px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.avatar.speaking {
+    transform: scale(1.05);
+    animation: bob 0.8s infinite ease-in-out;
+}
+
+@keyframes bob {
+    0% { transform: scale(1.05) translateY(0px); }
+    50% { transform: scale(1.05) translateY(-10px); }
+    100% { transform: scale(1.05) translateY(0px); }
+}
