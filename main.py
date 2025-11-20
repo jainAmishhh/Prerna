@@ -7,7 +7,8 @@ from model.model import (
     schemes_col,
     scholarships_col,
     sports_col,
-    motivation_col
+    motivation_col,
+    healt_col
 )
 
 app = FastAPI()
@@ -55,6 +56,10 @@ def get_motivation(age: int, region: str):
     data = filter_by_region_and_age(motivation_col, age, region)
     return {"motivation": data}
 
+@app.get("/healthcare")
+def get_healthcare(age:int,region:str):
+    data=filter_by_region_and_age(healt_col,age,region)
+    return {"healthcare":data}
 
 @app.get("/")
 def home():

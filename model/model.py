@@ -22,6 +22,7 @@ schemes_col = db["schemes"]
 scholarships_col = db["scholorship"]
 sports_col = db["sports"]
 motivation_col = db["motivation"]
+healt_col=db["health-section"]
 
 
 # -------------------------------
@@ -107,41 +108,6 @@ def recommend(age: int, interests: list, region: str, top_k: int = 5):
 # FILTER NON-EMBEDDING COLLECTIONS (SCHEMES ETC)
 # -----------------------------------------------
 
-# def filter_by_region_and_age(collection, age: int, region: str):
-
-#     # handle empty region
-#     if not region or region.strip() == "":
-#         region = "India"
-
-#     region = region.strip()
-
-#     indian_states = [
-#         "Rajasthan", "Delhi", "Karnataka", "Kerala", "Tamil Nadu",
-#         "Maharashtra", "Uttar Pradesh", "Madhya Pradesh", "Gujarat",
-#         "Telangana", "Bihar", "Punjab", "Haryana", "West Bengal",
-#         "Assam", "Odisha", "Goa", "Jharkhand", "Chhattisgarh",
-#         "Uttarakhand", "Himachal Pradesh", "Tripura", "Manipur",
-#         "Meghalaya", "Nagaland", "Sikkim", "Arunachal Pradesh",
-#     ]
-
-#     # if user gives "India"
-#     if region.lower() == "india":
-#         region_query = {"$in": indian_states + ["India"]}
-#     else:
-#         region_query = {"$in": [region, "India"]}
-
-#     # mongo query
-#     results = list(collection.find({
-#         "age_min": {"$lte": age},
-#         "age_max": {"$gte": age},
-#         "region": region_query
-#     }))
-
-#     # convert ObjectId → string for JSON
-#     for doc in results:
-#         doc["_id"] = str(doc["_id"])
-
-#     return results
 def build_region_query(region: str):
     indian_states = [
         "Rajasthan", "Delhi", "Karnataka", "Kerala", "Tamil Nadu",
