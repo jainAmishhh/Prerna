@@ -18,6 +18,7 @@ import BlogSection from "./Pages/BlogSection/BlogSection";
 import Auth from "./Components/Auth/Auth";
 import AboutPrernaPlatform from "./Pages/AboutSection/AboutPrernaPlatform";
 import AskDidi from "./Pages/AskDidi/AskDidi";
+import Opportunities from "./Components/Opportunities/Opportunities";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="/" element={<Dashboard />} />
           <Route path="/about-section" element={<AboutPrernaPlatform />} />
           <Route path="/schemes" element={<Schemes />} />
+          <Route path="/all-opportunities" element={<Opportunities />} />
           <Route path="/health" element={<HealthSection />} />
           <Route path="/guidance" element={<GuidanceSection />} />
           <Route path="/sakhi" element={<Sakhi />} />

@@ -41,16 +41,9 @@ const AuthInput = ({ icon: Icon, type = "text", placeholder, name, value, onChan
 // --- Helper Function ---
 // Function to simulate redirection to the home page
 const redirectToHome = (user) => {
-    // Store user data required for the Header component (initials, name, etc.)
-    localStorage.setItem("prerna-user", JSON.stringify({
-        fullname: user.fullname,
-        phonenumber: user.phonenumber,
-        // Add other user data needed for profile display here
-    }));
-    // In this environment, we use window.location.href for a full redirect.
-    window.location.href = "/";
+  localStorage.setItem("prerna-user", JSON.stringify(user));
+  window.location.href = "/";
 };
-
 
 // --- View Components ---
 
@@ -163,27 +156,30 @@ const LoginView = ({ formData, handleChange, setView }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleLoginWithPassword = async (e) => {
-        e.preventDefault();
-        setIsLoading(true);
+    e.preventDefault();
+    setIsLoading(true);
 
-        try {
-            const res = await axios.post("http://localhost:5000/api/auth/login", {
-                phonenumber: formData.phonenumber,
-                password: formData.password,
-            });
+    try {
+        const res = await axios.post("http://localhost:5000/api/auth/login", {
+            phonenumber: formData.phonenumber,
+            password: formData.password,
+        });
 
-            console.log("Login success:", res.data);
-            localStorage.setItem("token", res.data.token);
-            
-            // --- REDIRECT ON SUCCESS ---
-            redirectToHome(res.data.user || {fullname: formData.fullname, phonenumber: formData.phonenumber}); 
-        } catch (error) {
-            // NOTE: Using alert() for simulation. Use custom modal/toast in production.
-            alert(error.response?.data?.message || "Login failed");
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        console.log("Login success:", res.data);
+
+        localStorage.setItem("token", res.data.token);
+
+        // SAVE FULL USER DATA
+        localStorage.setItem("prerna-user", JSON.stringify(res.data.user));
+
+        redirectToHome(res.data.user);
+    } catch (error) {
+        alert(error.response?.data?.message || "Login failed");
+    } finally {
+        setIsLoading(false);
+    }
+};
+
 
     return (
         <form className="space-y-5" onSubmit={handleLoginWithPassword}>

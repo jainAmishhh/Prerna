@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, Query
+# from pydantic import BaseModel
 from typing import List
 from model.model import (
     recommend,
@@ -8,29 +8,54 @@ from model.model import (
     scholarships_col,
     sports_col,
     motivation_col,
-    healt_col
+    healt_col,
+    users_col
 )
+
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # allow all frontend URLs
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Input schema
-class RecommendInput(BaseModel):
-    age: int
-    interests: List[str]
-    region: str
-    top_k: int = 5
+@app.get("/recommend")
+def recommend_opportunities(
+    age: int = Query(None, description="User age"),
+    region: str = Query("", description="User region (state or India)"),
+    interests: List[str] = Query(None
+        , 
+        description="List of interests. Example: ?interests=tech&interests=ai"
+    ),
+    top_k: int = Query(5, description="Number of results to return"),
+):
+    """
+    Returns recommended opportunities based on:
+    - age
+    - region (state/india)
+    - list of interests
+    - top_k results
+    """
 
+    try:
+        # if not age and not region:
+        #     age=10,
+        #     interests=["Drawing","Tech","Painting","Teaching","Hairstylist"]
+        results = recommend(
+            age=age,
+            interests=interests,
+            region=region,
+            top_k=top_k
+        )
+        return {"status": "success", "count": len(results), "data": results}
 
-@app.post("/recommend")
-def recommend_opportunities(data: RecommendInput):
-    results = recommend(
-        age=data.age,
-        interests=data.interests,
-        region=data.region,
-        top_k=data.top_k
-    )
-    return {"recommendations": results}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 # 🔵 1. /schemes
 @app.get("/schemes")

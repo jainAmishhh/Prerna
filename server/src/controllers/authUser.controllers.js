@@ -5,7 +5,16 @@ import bcrypt from "bcrypt";
 import jsonwebtoken from "jsonwebtoken";
 
 /* =========================================================
-   PHONE LOGIN (PASSWORD BASED)
+   📌 HELPER → REMOVE PASSWORD BEFORE SENDING USER
+========================================================= */
+const sanitizeUser = (user) => {
+  if (!user) return null;
+  const { password, __v, ...clean } = user.toObject();
+  return clean;
+};
+
+/* =========================================================
+   📌 PHONE LOGIN (PASSWORD BASED)
 ========================================================= */
 export const phoneLogin = async (req, res) => {
   try {
@@ -31,11 +40,12 @@ export const phoneLogin = async (req, res) => {
       { expiresIn: "7d" }
     );
 
+    // 🔥 return sanitized (full) user data
     res.status(200).json({
       success: true,
       message: "Login successful",
       token,
-      user
+      user: sanitizeUser(user)
     });
 
   } catch (error) {
@@ -48,7 +58,7 @@ export const phoneLogin = async (req, res) => {
 
 
 /* =========================================================
-   PHONE SIGNUP (PASSWORD BASED)
+   📌 PHONE SIGNUP (PASSWORD BASED)
 ========================================================= */
 export const phoneSignup = async (req, res) => {
   try {
@@ -91,11 +101,12 @@ export const phoneSignup = async (req, res) => {
       { expiresIn: "7d" }
     );
 
+    // 🔥 return sanitized user
     res.status(201).json({
       success: true,
       message: "User registered successfully",
       token,
-      user: newUser
+      user: sanitizeUser(newUser)
     });
 
   } catch (err) {
@@ -105,7 +116,7 @@ export const phoneSignup = async (req, res) => {
 
 
 /* =========================================================
-   SEND OTP
+   📌 SEND OTP
 ========================================================= */
 export const sendOtp = async (req, res) => {
   try {
@@ -124,7 +135,8 @@ export const sendOtp = async (req, res) => {
       createdAt: Date.now()
     });
 
-    const response = await axios.post(
+    // SMS API Call
+    await axios.post(
       "https://www.fast2sms.com/dev/bulkV2",
       {
         route: "q",
@@ -140,12 +152,9 @@ export const sendOtp = async (req, res) => {
       }
     );
 
-    console.log("Fast2SMS response:", response.data);
-
     res.json({ success: true, message: "OTP sent successfully" });
 
   } catch (error) {
-    console.error("OTP send error:", error.response?.data || error.message);
     res.status(500).json({
       message: "Failed to send OTP",
       error: error.response?.data || error.message
@@ -155,7 +164,7 @@ export const sendOtp = async (req, res) => {
 
 
 /* =========================================================
-   VERIFY OTP + CREATE USER (NO PASSWORD)
+   📌 VERIFY OTP → LOGIN OR CREATE USER
 ========================================================= */
 export const verifyOtp = async (req, res) => {
   try {
@@ -195,11 +204,12 @@ export const verifyOtp = async (req, res) => {
       { expiresIn: "7d" }
     );
 
+    // 🔥 Full sanitized user returned
     res.json({
       success: true,
       message: "OTP verified successfully",
       token,
-      user
+      user: sanitizeUser(user)
     });
 
   } catch (error) {
