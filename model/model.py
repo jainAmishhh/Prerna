@@ -24,6 +24,8 @@ sports_col = db["sports"]
 motivation_col = db["motivation"]
 healt_col=db["health-section"]
 
+# user_db=client["test"]
+# users_col=user_db["users"]
 
 # -------------------------------
 #  LOAD BERT MODEL ONCE
@@ -42,7 +44,15 @@ def recommend(age: int, interests: list, region: str, top_k: int = 5):
     # ---------------------------
     if not region or region.strip() == "":
         region = "India"
+      # default age
+    if age is None:
+        age = 20
+        interests = ["Drawing", "Tech", "Painting", "Teaching", "Hairstylist"] 
 
+    # default interests
+    # if not interests:
+    #     interests = ["Drawing", "Tech", "Painting", "Teaching", "Hairstylist"]  
+        
     region = region.strip()
 
     # ---------------------------

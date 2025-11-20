@@ -2,3 +2,7 @@
 /scholarships?age=17&region=India
 /sports?age=25&region=Delhi
 /motivation?age=16&region=Rajasthan
+
+
+extract user's data by their uid
+extract fields like age,interest,region from database ,whole recommendation is based on it.

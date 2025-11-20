@@ -8,37 +8,18 @@ from model.model import (
     scholarships_col,
     sports_col,
     motivation_col,
-    healt_col
+    healt_col,
+    users_col
 )
 
 app = FastAPI()
 
-
-# # Input schema
-# class RecommendInput(BaseModel):
-#     age: int
-#     interests: List[str]
-#     region: str
-#     top_k: int = 5
-
-
-# @app.post("/recommend")
-# def recommend_opportunities(data: RecommendInput):
-#     results = recommend(
-#         age=data.age,
-#         interests=data.interests,
-#         region=data.region,
-#         top_k=data.top_k
-#     )
-#     return {"recommendations": results}
-
-
 @app.get("/recommend")
 def recommend_opportunities(
-    age: int = Query(..., description="User age"),
+    age: int = Query(None, description="User age"),
     region: str = Query("", description="User region (state or India)"),
-    interests: List[str] = Query(
-        ..., 
+    interests: List[str] = Query(None
+        , 
         description="List of interests. Example: ?interests=tech&interests=ai"
     ),
     top_k: int = Query(5, description="Number of results to return"),
@@ -52,6 +33,9 @@ def recommend_opportunities(
     """
 
     try:
+        # if not age and not region:
+        #     age=10,
+        #     interests=["Drawing","Tech","Painting","Teaching","Hairstylist"]
         results = recommend(
             age=age,
             interests=interests,
