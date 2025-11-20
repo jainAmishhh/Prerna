@@ -4,3 +4,5 @@ pandas
 numpy
 sentence-transformers
 torch
+pymongo
+deep_translator
