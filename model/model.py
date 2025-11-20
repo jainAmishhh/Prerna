@@ -142,6 +142,7 @@ def build_region_query(region: str):
 def filter_by_region_and_age(collection, age: int, region: str):
 
     region_query = build_region_query(region)
+   
 
     results = list(collection.find({
         "age_min": {"$lte": age},
