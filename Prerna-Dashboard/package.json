@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "backend": "cd ../personalize_branch_data && uvicorn main:app --reload --port 8000",
-    "askDidi": "cd ../askDidi/didi-backend && uvicorn main:app --reload --port 8000",
+    "askDidi": "cd ../askDidi/didi-backend && uvicorn main:app --reload --port 8001",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\" \"npm run askDidi\""
   },
   "dependencies": {

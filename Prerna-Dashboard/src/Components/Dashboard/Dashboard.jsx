@@ -11,7 +11,7 @@ import ScholarshipCards from "../ScholarshipCards/ScholarshipCards";
 import HealthCards from "../HealthCards/HealthCards";
 import SportsCards from "../SportsCards/SportsCards";
 import MotivationCards from "../MotivationCards/MotivationCards";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardPage() {
   const { t } = useTranslation();
@@ -20,7 +20,7 @@ export default function DashboardPage() {
 
   const openDidiFrontend = () => {
     window.location.href = "/frontend/index.html";
-  }
+  };
 
   // Detect scroll
   useEffect(() => {
@@ -74,11 +74,12 @@ export default function DashboardPage() {
                 {!isFloating && (
                   <div className="flex flex-wrap gap-4">
                     {/* Voice Button Primary Gradient */}
-                    <button 
-                     onClick={openDidiFrontend}
-                     className="bg-linear-to-r from-[#D9534F] to-[#FFC843] w-[35%] bg-size-200 bg-pos-0 hover:bg-pos-100 text-white px-10 py-4 rounded-full text-lg font-bold shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105">
+                    <NavLink
+                      to="/ask-Didi"
+                      className="bg-linear-to-r from-[#D9534F] to-[#FFC843] w-[35%] bg-size-200 bg-pos-0 hover:bg-pos-100 text-white px-10 py-4 rounded-full text-lg font-bold shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105"
+                    >
                       <FaMicrophone className="text-white" size={30} />
-                    </button>
+                    </NavLink>
 
                     {/* Explore Button Secondary Accent */}
                     <button className="border-2 border-[#D9534F] text-[#D9534F] px-10 py-4 rounded-full text-lg font-bold hover:bg-[#FFC843]/30 transition-all flex items-center space-x-2 transform hover:scale-105">
@@ -90,9 +91,12 @@ export default function DashboardPage() {
 
                 {/* Floating Microphone Button */}
                 {isFloating && (
-                  <button onClick={openDidiFrontend} className="fixed bottom-6 left-6 bg-linear-to-r from-[#D9534F] to-[#FFC843] text-white shadow-2xl shadow-[#333333]/50 rounded-full w-20 h-20 flex items-center justify-center transition-all duration-300 transform hover:scale-110 z-100">
+                  <NavLink
+                    to="/ask-Didi"
+                    className="fixed bottom-6 left-6 bg-linear-to-r from-[#D9534F] to-[#FFC843] text-white shadow-2xl shadow-[#333333]/50 rounded-full w-20 h-20 flex items-center justify-center transition-all duration-300 transform hover:scale-110 z-100"
+                  >
                     <FaMicrophone size={32} />
-                  </button>
+                  </NavLink>
                 )}
               </div>
 
@@ -106,7 +110,6 @@ export default function DashboardPage() {
                   <BsWechat size={50} className=" rotate-12" />
                 </span>
               </NavLink>
-
             </div>
 
             {/* Image + Design */}
@@ -116,7 +119,7 @@ export default function DashboardPage() {
                 <div className="bg-linear-to-br from-[#D9534F] to-[#FFC843] rounded-tl-full rounded-tr-[40%] rounded-bl-[30%] rounded-br-[50%] overflow-hidden shadow-2xl">
                   <div className="relative">
                     {/* Inner Decorative Circle - Updated Color */}
-                    <div className="absolute top-8 left-8 w-32 h-32 bg-[#FFC843] rounded-full opacity-90"></div> 
+                    <div className="absolute top-8 left-8 w-32 h-32 bg-[#FFC843] rounded-full opacity-90"></div>
 
                     <img
                       src="https://plus.unsplash.com/premium_photo-1681483508948-74f8391ea3ef?q=80&w=1100&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -166,7 +169,9 @@ export default function DashboardPage() {
             <h3 className="text-[#333333] text-3xl font-bold mb-3">
               {t("vaccine_card_title_1")}
             </h3>
-            <h3 className="text-[#333333] text-3xl font-bold mb-4">{t("vaccine_card_title_2")}</h3>
+            <h3 className="text-[#333333] text-3xl font-bold mb-4">
+              {t("vaccine_card_title_2")}
+            </h3>
             <p className="text-gray-700 text-lg mb-6 leading-relaxed">
               {t("vaccine_card_description")}
             </p>
@@ -189,8 +194,12 @@ export default function DashboardPage() {
                 size={40}
               />
             </div>
-            <h3 className="text-white text-3xl font-bold mb-3">{t("health_card_title_1")}</h3>
-            <h3 className="text-white text-3xl font-bold mb-4">{t("health_card_title_2")}</h3>
+            <h3 className="text-white text-3xl font-bold mb-3">
+              {t("health_card_title_1")}
+            </h3>
+            <h3 className="text-white text-3xl font-bold mb-4">
+              {t("health_card_title_2")}
+            </h3>
             <p className="text-white/90 text-lg mb-6 leading-relaxed">
               {t("health_card_description")}
             </p>
@@ -210,8 +219,12 @@ export default function DashboardPage() {
             <div className="bg-[#D9534F]/50 backdrop-blur-sm w-20 h-20 rounded-2xl flex items-center justify-center mb-6 transform group-hover:rotate-12 transition-transform duration-300">
               <NotebookPen className="text-white" size={40} />
             </div>
-            <h3 className="text-[#333333] text-3xl font-bold mb-3">{t("assignment_card_title_1")}</h3>
-            <h3 className="text-[#333333] text-3xl font-bold mb-4">{t("assignment_card_title_2")}</h3>
+            <h3 className="text-[#333333] text-3xl font-bold mb-3">
+              {t("assignment_card_title_1")}
+            </h3>
+            <h3 className="text-[#333333] text-3xl font-bold mb-4">
+              {t("assignment_card_title_2")}
+            </h3>
             <p className="text-gray-800 text-lg mb-6 leading-relaxed">
               {t("assignment_card_description")}
             </p>
@@ -338,7 +351,7 @@ export default function DashboardPage() {
 //                 <div className="bg-linear-to-br from-[#E2A6B2] to-[#D0687C] rounded-tl-full rounded-tr-[40%] rounded-bl-[30%] rounded-br-[50%] overflow-hidden shadow-2xl">
 //                   <div className="relative">
 //                     {/* Inner Decorative Circle */}
-//                     <div className="absolute top-8 left-8 w-32 h-32 bg-[#FCE8EB] rounded-full opacity-90"></div> 
+//                     <div className="absolute top-8 left-8 w-32 h-32 bg-[#FCE8EB] rounded-full opacity-90"></div>
 
 //                     <img
 //                       src="https://plus.unsplash.com/premium_photo-1681483508948-74f8391ea3ef?q=80&w=1100&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
