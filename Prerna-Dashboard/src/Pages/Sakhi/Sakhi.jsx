@@ -39,11 +39,14 @@ const quickActionsData = [
   { icon: <Stethoscope className="w-4 h-4" />, text: "Pregnancy guidance", category: "health" },
 ];
 
+// --- CONFIGURATION ---
+const API_BASE_URL = import.meta.env.VITE_PERSONALIZE_API;
+
 // REAL BACKEND API CALL
 const fetchSakhiResponse = async (query) => {
   try {
     const res = await fetch(
-      `http://localhost:8000/sakhi?query=${encodeURIComponent(query)}`
+      `${API_BASE_URL}/sakhi?query=${encodeURIComponent(query)}`
     );
 
     const data = await res.json();
