@@ -11,8 +11,9 @@ const SOFT_PINK = "#F9E8EC"; // Background accent
 const WHITE_GLOW = "#FFF8FB"; // Card background
 
 // --- Configuration and Constants ---
-const API_BASE_URL = "http://127.0.0.1:8000"; 
-const HEALTHCARE_ENDPOINT = `${API_BASE_URL}/healthcare`; 
+const API_BASE_URL = import.meta.env.VITE_PERSONALIZE_API;
+const HEALTHCARE_ENDPOINT = `${API_BASE_URL}/healthcare`;
+ 
 const ALL_OPPORTUNITIES_ROUTE = "/health"; 
 
 // A mapping for icons
