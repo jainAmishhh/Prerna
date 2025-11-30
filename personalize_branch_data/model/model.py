@@ -1,16 +1,14 @@
-
 import pymongo
 import google.generativeai as genai
 import numpy as np
 from pathlib import Path
-import torch
 from dotenv import load_dotenv
 import os
 
 # -----------------------------------
 # LOAD ENV
 # -----------------------------------
-path_api=Path(__file__).resolve().parent.parent / "server" / ".env"
+path_api = Path(__file__).resolve().parent.parent / "server" / ".env"
 load_dotenv(path_api)
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
@@ -37,18 +35,29 @@ users_col = db["test_users"]
 
 # -----------------------------------
 # GEMINI EMBEDDING FUNCTION
-# (REPLACES BERT COMPLETELY)
 # -----------------------------------
 def embed_text(text: str):
     response = genai.embed_content(
         model="models/text-embedding-004",
         content=text,
     )
-    return response["embedding"]  # returns list[float]
+    return np.array(response["embedding"])  # return numpy array
+
+
+# -----------------------------------
+# NUMPY COSINE SIMILARITY
+# -----------------------------------
+def cosine_similarity(user_vec, doc_vecs):
+    # Normalize vectors
+    user_norm = user_vec / np.linalg.norm(user_vec)
+    doc_norms = doc_vecs / np.linalg.norm(doc_vecs, axis=1, keepdims=True)
+
+    # Dot product
+    return np.dot(doc_norms, user_norm)
 
 
 # ---------------------------------------------
-# MAIN RECOMMEND FUNCTION (UNCHANGED LOGIC)
+# MAIN RECOMMEND FUNCTION
 # ---------------------------------------------
 def recommend(age: int, interests: list, region: str, top_k: int = 5):
 
@@ -70,24 +79,17 @@ def recommend(age: int, interests: list, region: str, top_k: int = 5):
         "Meghalaya", "Nagaland", "Sikkim", "Arunachal Pradesh",
     ]
 
-    # --------------------------
-    # Region query
-    # --------------------------
+    # Region filter
     if region.lower() == "india":
         region_query = {"$in": indian_states + ["India"]}
     else:
         region_query = {"$in": [region, "India"]}
 
-    # --------------------------
     # Create user embedding
-    # --------------------------
     user_text = " ".join(interests) + f" age {age} region {region}"
-    user_embedding = np.array(embed_text(user_text))
-    user_embedding = torch.tensor(user_embedding)
+    user_embedding = embed_text(user_text)
 
-    # --------------------------
-    # Fetch documents
-    # --------------------------
+    # Fetch matching opportunities
     matching_docs = list(collection.find({
         "age_min": {"$lte": age},
         "age_max": {"$gte": age},
@@ -98,28 +100,24 @@ def recommend(age: int, interests: list, region: str, top_k: int = 5):
     if not matching_docs:
         return []
 
-    # --------------------------
+    # Collect embeddings
+    doc_embeddings = np.array([doc["embedding"] for doc in matching_docs])
+
     # Compute cosine similarity
-    # --------------------------
-    doc_embeddings = torch.tensor([doc["embedding"] for doc in matching_docs])
-    scores = torch.nn.functional.cosine_similarity(
-        user_embedding.unsqueeze(0), doc_embeddings
-    ).numpy()
+    scores = cosine_similarity(user_embedding, doc_embeddings)
 
     # Attach scores
     for i, doc in enumerate(matching_docs):
         doc["_id"] = str(doc["_id"])
         doc["score"] = float(scores[i])
 
-    # --------------------------
-    # Sort & return
-    # --------------------------
+    # Sort & return top K
     sorted_docs = sorted(matching_docs, key=lambda x: x["score"], reverse=True)
     return sorted_docs[:top_k]
 
 
 # ---------------------------------------------
-# FILTER NON-EMBED COLLECTIONS (same as before)
+# REGION + AGE FILTERS (unchanged)
 # ---------------------------------------------
 def build_region_query(region: str):
     indian_states = [
