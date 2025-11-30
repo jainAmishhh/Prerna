@@ -13,10 +13,10 @@ const NEUTRAL_BASE = "FBFBFB";
 const DARK_TEXT = "333333";
 
 // --- CONFIGURATION ---
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // --- API ENDPOINTS ---
-const ENDPOINTS = {
+export const ENDPOINTS = {
     schemes: `${API_BASE_URL}/schemes`,
     scholarships: `${API_BASE_URL}/scholarships`,
     sports: `${API_BASE_URL}/sports`,
