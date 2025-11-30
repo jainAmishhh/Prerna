@@ -7,9 +7,9 @@ import { useTranslation } from "react-i18next";
 // --- Configuration and Constants ---
 
 // Using hardcoded URL as requested for compilation environment.
-const API_BASE_URL = "http://127.0.0.1:8000"; 
-// Changed endpoint to target the general /schemes route
-const SCHEMES_ENDPOINT = `${API_BASE_URL}/schemes`; 
+const API_BASE_URL = import.meta.env.VITE_PERSONALIZE_API;
+const SCHEMES_ENDPOINT = `${API_BASE_URL}/schemes`;
+
 const ALL_OPPORTUNITIES_ROUTE = "/schemes"; // Placeholder route
 
 // A mapping for icons based on the data 'type' or a category in your DB
