@@ -7,8 +7,12 @@ import { useTranslation } from "react-i18next";
 // --- Configuration and Constants ---
 
 // Using hardcoded URL as requested for compilation environment.
-const API_BASE_URL = "http://127.0.0.1:8000"; 
+// Load API URL from your Vite environment file (.env)
+const API_BASE_URL = import.meta.env.VITE_PERSONALIZE_API;
+
+// Build endpoint
 const RECOMMEND_ENDPOINT = `${API_BASE_URL}/recommend`;
+
 const ALL_OPPORTUNITIES_ROUTE = "/opportunities"; // Placeholder route for the new button
 
 // A mapping for icons based on the data 'type' or a category in your DB
