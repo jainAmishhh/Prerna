@@ -11,8 +11,9 @@ const SOFT_ACCENT = "#F9E8EC";
 const DARK_TEXT = "#333333"; 
 
 // --- CONFIGURATION ---
-const API_BASE_URL = "http://127.0.0.1:8000"; 
-const HEALTHCARE_ENDPOINT = `${API_BASE_URL}/healthcare`; 
+const API_BASE_URL = import.meta.env.VITE_FASTAPI_API;
+const HEALTHCARE_ENDPOINT = `${API_BASE_URL}/healthcare`;
+
 
 // --- VIBRANT COLOR GRADIENTS FOR HEALTH CATEGORIES ---
 const GRADIENTS = {
