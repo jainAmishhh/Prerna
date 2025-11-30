@@ -11,8 +11,8 @@ const SOFT_ACCENT = "#F9E8EC";
 const DARK_TEXT = "#333333"; 
 
 // --- CONFIGURATION ---
-const API_BASE_URL = "http://127.0.0.1:8000"; 
-const SCHOLARSHIPS_ENDPOINT = `${API_BASE_URL}/scholarships`; 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const SCHOLARSHIPS_ENDPOINT = `${API_BASE_URL}/scholarships`;
 
 // --- VIBRANT COLOR GRADIENTS FOR CATEGORIES (Used for Icon Accent) ---
 const GRADIENTS = {
