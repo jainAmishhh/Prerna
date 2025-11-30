@@ -17,7 +17,7 @@ def ask_gemini(prompt):
             "temperature": 0.4,
             "top_p": 0.9,
             "response_mime_type": "text/plain",
-            "max_output_tokens": 100 
+            # "max_output_tokens": 100 
         }
     )
     response = model.generate_content([prompt])
