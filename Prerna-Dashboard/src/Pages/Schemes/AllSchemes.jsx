@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { GraduationCap, BookOpen, Users, Award, Shield, Heart, ChevronRight, Search, Filter, Sparkles, Flame, Star, ArrowRight, MapPin, Clock } from 'lucide-react';
 import axios from 'axios';
 
-// --- Configuration and Constants ---
-const API_BASE_URL = "http://127.0.0.1:8000"; 
-const SCHEMES_ENDPOINT = `${API_BASE_URL}/schemes`; 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const SCHEMES_ENDPOINT = `${API_BASE_URL}/schemes`;
 
 // Icon mapping
 const iconMap = {
