@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Query
 # from pydantic import BaseModel
 from typing import List
+from sakhi import ask_gemini
 from model.model import (
     recommend,
     filter_by_region_and_age,
@@ -89,3 +90,11 @@ def get_healthcare(age:int,region:str):
 @app.get("/")
 def home():
     return {"message": "Opportunity Recommendation API is running"}
+
+@app.get("/sakhi")
+def sakhi_chatbot(query: str = Query(..., description="User message to Sakhi chatbot")):
+    try:
+        response = ask_gemini(query)
+        return {"status": "success", "reply": response}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
