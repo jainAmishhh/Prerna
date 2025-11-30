@@ -161,7 +161,7 @@ const LoginView = ({ formData, handleChange, setView }) => {
     setIsLoading(true);
 
     try {
-        const res = await axios.post("http://localhost:5000/api/auth/login", {
+        const res = await axios.post(`${import.meta.env.VITE_NODE_API}/api/auth/login`, {
             phonenumber: formData.phonenumber,
             password: formData.password,
         });
@@ -228,7 +228,7 @@ const OtpRequestView = ({ formData, handleChange, setView }) => {
         setIsLoading(true);
 
         try {
-            const res = await axios.post("http://localhost:5000/api/auth/send-otp", {
+            const res = await axios.post(`${import.meta.env.VITE_NODE_API}/api/auth/send-otp`, {
                 phonenumber: formData.phonenumber,
             });
 
@@ -300,9 +300,7 @@ const OtpVerificationView = ({ phone, setView }) => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post(
-        "http://localhost:5000/api/auth/verify-otp",
-        {
+      const res = await axios.post(`${import.meta.env.VITE_NODE_API}/api/auth/verify-otp`, {
           phonenumber: phone,
           otp,
         }
