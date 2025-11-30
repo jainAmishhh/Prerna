@@ -11,8 +11,9 @@ const SOFT_PINK = "#F9E8EC"; // Background accent color
 const CREAMY_WHITE = "#FBFBFB";
 
 // --- Configuration and Constants ---
-const API_BASE_URL = "http://127.0.0.1:8000"; 
-const MOTIVATION_ENDPOINT = `${API_BASE_URL}/motivation`; // Targeting the /motivation endpoint
+const API_BASE_URL = import.meta.env.VITE_PERSONALIZE_API;
+const MOTIVATION_ENDPOINT = `${API_BASE_URL}/motivation`;
+
 const ALL_OPPORTUNITIES_ROUTE = "/motivation"; 
 
 // A mapping for icons (Using inspirational/supportive icons)
