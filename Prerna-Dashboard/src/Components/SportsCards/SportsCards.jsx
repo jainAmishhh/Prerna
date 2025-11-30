@@ -22,8 +22,10 @@ const SUNNY_YELLOW = "#FFC843"; // Tertiary accent color (Achievement/Gold)
 const SOFT_PINK = "#F9E8EC"; // Background accent
 
 // --- Configuration and Constants ---
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = import.meta.env.VITE_PERSONALIZE_API;
 const SPORTS_ENDPOINT = `${API_BASE_URL}/sports`;
+
+
 const ALL_OPPORTUNITIES_ROUTE = "/sports";
 
 // A mapping for icons
