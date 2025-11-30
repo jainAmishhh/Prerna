@@ -11,9 +11,9 @@ const SOFT_ACCENT = "#F9E8EC";
 const DARK_TEXT = "#333333"; 
 
 // --- CONFIGURATION ---
-const API_BASE_URL = "http://127.0.0.1:8000"; 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;  
 const SPORTS_ENDPOINT = `${API_BASE_URL}/sports`;
-const ALL_OPPORTUNITIES_ROUTE = "/all-opportunities"; 
+const ALL_OPPORTUNITIES_ROUTE = "/all-opportunities";
 
 // --- VIBRANT COLOR GRADIENTS FOR SPORTS CATEGORIES ---
 const GRADIENTS = {
