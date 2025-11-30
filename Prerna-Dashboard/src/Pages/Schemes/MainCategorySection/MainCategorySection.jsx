@@ -13,9 +13,13 @@ import {
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const API_BASE_URL = "http://127.0.0.1:8000";
-const DEFAULT_USER_AGE = 25;
-const DEFAULT_USER_REGION = "India";
+// Load from Vite environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// Fallback values (optional)
+const DEFAULT_USER_AGE = import.meta.env.VITE_DEFAULT_USER_AGE || 25;
+const DEFAULT_USER_REGION = import.meta.env.VITE_DEFAULT_USER_REGION || "India";
+
 
 /* CATEGORY METADATA (STATIC – NO TEXT HERE) */
 const CATEGORY_METADATA = [
