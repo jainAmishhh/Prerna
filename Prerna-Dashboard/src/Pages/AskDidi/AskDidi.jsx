@@ -14,7 +14,7 @@ const AskDidi = () => {
   const audioChunksRef = useRef([]);
   const currentAudioRef = useRef(null);
 
-  const backendURL = "http://127.0.0.1:8001";
+  const backendURL = import.meta.env.VITE_ASKDIDI_API;
 
   // --- Cleanup on unmount ---
   useEffect(() => {
