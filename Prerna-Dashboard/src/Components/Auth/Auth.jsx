@@ -55,9 +55,10 @@ const SignupView = ({ formData, handleChange, setView }) => {
     try {
       // Simulate API call to register user (backend would send OTP here)
       const res = await axios.post(
-        "http://localhost:5000/api/auth/signup",
-        formData
+        `${import.meta.env.VITE_NODE_API}/api/auth/signup`,
+          formData
       );
+
 
       console.log("Signup success:", res.data);
 
