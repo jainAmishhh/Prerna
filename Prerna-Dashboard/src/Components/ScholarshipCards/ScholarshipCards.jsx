@@ -15,8 +15,9 @@ import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 // --- Configuration and Constants ---
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = import.meta.env.VITE_PERSONALIZE_API;
 const SCHOLARSHIPS_ENDPOINT = `${API_BASE_URL}/scholarships`;
+
 const ALL_OPPORTUNITIES_ROUTE = "/scholarships";
 
 // --- Theme Colors ---
