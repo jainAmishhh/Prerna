@@ -1,10 +1,17 @@
 # didi-backend/routes/stt_routes.py
+
 import os
 import uuid
 from fastapi import APIRouter, UploadFile, File, Form
+from dotenv import load_dotenv
+
 from services.stt_service import transcribe_audio
 from services.chat_service import process_chat
 from services.tts_service import text_to_speech
+
+# Load .env
+load_dotenv()
+BASE_URL = os.getenv("BASE_URL") 
 
 router = APIRouter()
 
@@ -21,11 +28,14 @@ async def speech_ask(user_id: str = Form(...), audio: UploadFile = File(...)):
         f.write(await audio.read())
 
     transcript = transcribe_audio(filepath)
+
     answer = process_chat(user_id, transcript)
 
     audio_path = text_to_speech(answer)
+
     file_name = audio_path.replace("\\", "/").split("/")[-1]
-    audio_url = f"http://127.0.0.1:8001/tts/{file_name}"
+
+    audio_url = f"{BASE_URL}/tts/{file_name}"
 
     return {
         "transcript": transcript,
